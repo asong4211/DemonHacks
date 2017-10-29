@@ -1,0 +1,78 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='dashboard.css')}}">
+{% endblock %}
+
+{% block content %}
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="{{ url_for('dashboard')}}"> Mentality Network </a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="{{url_for('create_post')}}">New Post</a></li>
+            <li><a href="#">Chat with Me</a></li>
+            <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+
+      <div class="card-header">
+        <ul class="nav nav-tabs card-header-tabs">
+          <li class="nav-item">
+            <a class="nav-link active" href="{{ url_for('general')}}">General</a>
+          </li>
+          <li class = "nav-item">
+            <a class ="nav-link active" href="{{ url_for('prejudice')}}">Prejudice / Discrimination </a>
+          </li>
+          <li class ="nav-item">
+            <a class = "nav-link active" href ="{{url_for('stress')}}"> School Stress </a>
+          </li>
+          <li class ="nav-item">
+            <a class = "nav-link active" href= "{{url_for('grief')}}"> Grief / Stress</a>
+          </li>
+          <li class ="nav-item">
+            <a class ="nav-link active" href ="{{url_for('body')}}"> Body image </a>
+          </li>
+          <li class ="nav-item">
+            <a class ="nav-link active" href ="{{url_for('addiction')}}"> Addiction</a>
+          </li>
+          <li class ="nav-item">
+            <a class ="nav-link active" href ="{{url_for('romantic')}}"> Romantic Relationship</a>
+          </li>
+          <li class ="nav-item">
+            <a class ="nav-link active" href ="{{url_for('sexualOrient')}}"> Sexual Orientation</a>
+          </li>
+        </ul>
+      </div>
+
+      {% for post in posts %}
+      <div class = "container">
+        <h3 class="card-title"> {{ post.title.capitalize() }}</a> &nbsp;&nbsp;&nbsp;&nbsp;<small> Posted at: {{ post.date.strftime('%m/%d/%y at %I:%M%p')}} </small></h3>
+        <p class="card-text"> {{post.text}} </p>
+        <input  type = "hidden" name = "myPost"  values = "{{post.title}}" />
+        <p> <button class="btn btn-default" action = "/retrieve/" method = "POST" type = "submit"> Comment </button>
+        <button  class = "btn btn-default" action = "/retrieve/" method = "POST"type = "submit"> View All</button> </p>
+        <br />
+      </div>
+      {% endfor %}
+
+
+
+
+{% endblock %}
